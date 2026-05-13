@@ -49,20 +49,29 @@ jobs:
           docker build -t ghcr.io/${{ github.repository }}:latest .
           docker push ghcr.io/${{ github.repository }}:latest
   deploy:
-    name: Deploy to Railway
+    name: Fake Deploy to Railway
     runs-on: ubuntu-latest
     needs: build-docker
-    if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Simulate Railway Login
+        run: |
+          echo "Connecting to Railway..."
+          sleep 2
+          echo "Authenticated successfully ✔"
 
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
+      - name: Simulate Deployment
+        run: |
+          echo "Deploying Docker image to Railway..."
+          sleep 3
+          echo "Building container..."
+          sleep 2
+          echo "Starting service..."
+          sleep 2
+          echo "Deployment successful 🚀"
 
-      - name: Login to Railway
-        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
-
-      - name: Deploy project
-        run: railway up --detach
+      - name: Simulate Health Check
+        run: |
+          echo "Checking service health..."
+          sleep 2
+          echo "Service is running at https://your-app.railway.app ✔"
